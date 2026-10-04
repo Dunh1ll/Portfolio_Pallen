@@ -11,8 +11,8 @@ import HobbyCard from '../components/HobbyCard'
 import DrawingGallery from '../components/DrawingGallery'
 
 const education = [
-  { icon: GraduationCap, title: 'BS in Computer Engineering', status: 'Undergraduate', statusColor: '#fbbf24' },
-  { icon: Zap, title: 'Electrical Installation and Maintenance', status: 'Senior High School — Graduate', statusColor: '#4ade80' },
+  { icon: GraduationCap, title: 'BS in Computer Engineering', status: 'Graduate — 2026', statusColor: '#4ade80' },
+  { icon: Zap, title: 'Electrical Installation and Maintenance', status: 'Senior High School — Graduate, 2022', statusColor: '#4ade80' },
 ]
 
 const values = [
@@ -29,21 +29,21 @@ const tools = [
 
 const skillGroups = [
   { label: 'Frontend', items: [
-    { name: 'HTML', proficiency: 0.92 }, { name: 'CSS', proficiency: 0.88 },
-    { name: 'JavaScript', proficiency: 0.85 }, { name: 'React', proficiency: 0.82 },
-    { name: 'Flutter', proficiency: 0.90 },
+    { name: 'HTML', color: '#E34F26', proficiency: 0.92 }, { name: 'CSS', color: '#2D8CFF', proficiency: 0.88 },
+    { name: 'JavaScript', color: '#F7DF1E', proficiency: 0.85 }, { name: 'React', color: '#61DAFB', proficiency: 0.82 },
+    { name: 'Flutter', color: '#40A9FF', proficiency: 0.90 },
   ]},
   { label: 'Backend', items: [
-    { name: 'Go', proficiency: 0.80 }, { name: 'Java', proficiency: 0.85 },
-    { name: 'Python', proficiency: 0.88 }, { name: 'C++', proficiency: 0.82 },
-    { name: 'C', proficiency: 0.78 },
+    { name: 'Go', color: '#00ADD8', proficiency: 0.80 }, { name: 'Java', color: '#F89820', proficiency: 0.85 },
+    { name: 'Python', color: '#4B8BBE', proficiency: 0.88 }, { name: 'C++', color: '#659AD2', proficiency: 0.82 },
+    { name: 'C', color: '#A8B9CC', proficiency: 0.78 },
   ]},
   { label: 'Database', items: [
-    { name: 'PostgreSQL', proficiency: 0.80 }, { name: 'MySQL', proficiency: 0.82 },
-    { name: 'JSON', proficiency: 0.90 },
+    { name: 'PostgreSQL', color: '#4F8FC9', proficiency: 0.80 }, { name: 'MySQL', color: '#E48E00', proficiency: 0.82 },
+    { name: 'JSON', color: '#CBCB41', proficiency: 0.90 },
   ]},
   { label: 'Low-Level / Other', items: [
-    { name: 'Assembly Language', proficiency: 0.70 }, { name: 'HDL', proficiency: 0.65 },
+    { name: 'Assembly Language', color: '#22C55E', proficiency: 0.70 }, { name: 'HDL', color: '#818CF8', proficiency: 0.65 },
   ]},
 ]
 
@@ -69,12 +69,12 @@ export default function About() {
         </p>
       </ScrollReveal>
       <ScrollReveal delay={0.1}>
-        <h1
+        <h2
           className="text-4xl md:text-5xl font-bold mb-12"
           style={{ color: 'var(--head)', fontFamily: 'Playfair Display, serif', letterSpacing: '-1px' }}
         >
           The person behind the profile.
-        </h1>
+        </h2>
       </ScrollReveal>
 
       <div className="flex flex-col md:flex-row gap-14">
@@ -92,7 +92,7 @@ export default function About() {
           <div className="flex flex-col gap-4 text-sm leading-[1.85]" style={{ color: 'var(--body)' }}>
             <ScrollReveal delay={0.1}>
               <p>
-                I'm a Computer Engineering undergraduate with a passion for building systems that
+                I'm a Computer Engineering graduate with a passion for building systems that
                 make a tangible difference. My journey began with a curiosity for how things work —
                 from the circuits on a PCB to the lines of code running on a server.
               </p>

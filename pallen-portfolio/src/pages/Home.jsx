@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react'
 import { Briefcase, Mail, Download } from 'lucide-react'
 import GeoBackground from '../canvas/GeoBackground'
 import DotGrid from '../canvas/DotGrid'
@@ -9,10 +10,18 @@ import QuickStat from '../components/QuickStat'
 import AvailRow from '../components/AvailRow'
 import AnimeCat from '../components/AnimeCat'
 import ProfilePhotoGlow from '../components/ProfilePhotoGlow'
-import { useNavigate } from 'react-router-dom'
+import { scrollToSection } from '../lib/sections'
 
 export default function Home() {
-  const navigate = useNavigate()
+  const [atTop, setAtTop] = useState(true)
+
+  // Fade the SCROLL cue out once the visitor has started scrolling.
+  useEffect(() => {
+    const onScroll = () => setAtTop(window.scrollY < 40)
+    onScroll()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
 
   return (
     <div
@@ -59,8 +68,8 @@ export default function Home() {
 
           <FadeSlide delay={1.0} className="mt-9">
             <div className="flex flex-wrap gap-3">
-              <CtaButton label="See My Work" icon={Briefcase} filled onClick={() => navigate('/work')} />
-              <CtaButton label="Contact Me" icon={Mail} onClick={() => navigate('/contact')} />
+              <CtaButton label="See My Work" icon={Briefcase} filled onClick={() => scrollToSection('work')} />
+              <CtaButton label="Contact Me" icon={Mail} onClick={() => scrollToSection('contact')} />
               <CtaButton
                 label="Resume"
                 icon={Download}
@@ -96,15 +105,23 @@ export default function Home() {
         </div>
       </div>
 
-      {/* Scroll indicator */}
-      <FadeSlide delay={1.2} className="absolute bottom-6 left-0 right-0 flex flex-col items-center">
-        <span className="text-[9px] font-bold tracking-[3px]" style={{ color: 'var(--muted)' }}>
-          SCROLL
-        </span>
-        <div
-          className="w-px h-[30px] mt-2"
-          style={{ background: 'linear-gradient(to bottom, var(--muted), transparent)' }}
-        />
+      {/* Scroll indicator — scroll or click to continue to the next section */}
+      <FadeSlide delay={1.2} className="absolute bottom-6 left-0 right-0 z-20 flex flex-col items-center pointer-events-none">
+        <button
+          type="button"
+          onClick={() => scrollToSection('about')}
+          aria-label="Scroll down to the About section"
+          className="flex flex-col items-center cursor-pointer transition-opacity duration-300"
+          style={{ background: 'none', border: 'none', opacity: atTop ? 1 : 0, pointerEvents: atTop ? 'auto' : 'none' }}
+        >
+          <span className="text-[9px] font-bold tracking-[3px]" style={{ color: 'var(--muted)' }}>
+            SCROLL
+          </span>
+          <div
+            className="w-px h-[30px] mt-2 animate-scrollCue"
+            style={{ background: 'linear-gradient(to bottom, var(--muted), transparent)' }}
+          />
+        </button>
       </FadeSlide>
     </div>
   )

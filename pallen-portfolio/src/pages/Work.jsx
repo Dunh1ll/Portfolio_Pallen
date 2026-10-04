@@ -2,6 +2,7 @@ import {
   Zap, Briefcase, Calendar, MapPin, GraduationCap, Layers, Building2,
   UserCog, Brain, ShieldCheck, Trophy, Lightbulb, Power, HardHat,
   Box, CircuitBoard, BookOpen, Palette, ClipboardList, Bug, Terminal, Code,
+  Wrench, Factory, Users,
 } from 'lucide-react'
 import ScrollReveal from '../components/ScrollReveal'
 import SubLabel from '../components/SubLabel'
@@ -21,12 +22,12 @@ export default function Work() {
         </p>
       </ScrollReveal>
       <ScrollReveal delay={0.1}>
-        <h1
+        <h2
           className="text-4xl md:text-5xl font-bold mb-3"
           style={{ color: 'var(--head)', fontFamily: 'Playfair Display, serif', letterSpacing: '-1px' }}
         >
           Experience & Engineering.
-        </h1>
+        </h2>
       </ScrollReveal>
       <ScrollReveal delay={0.15}>
         <p className="text-sm max-w-xl mb-14" style={{ color: 'var(--body)' }}>
@@ -39,12 +40,12 @@ export default function Work() {
       <div className="mt-5">
         <ScrollReveal delay={0.1}>
           <ProjectHeroCard
-            chips={['WORK IMMERSION  ·  2024', 'Electrical Maintenance']}
+            chips={['WORK IMMERSION  ·  2022', 'Electrical Maintenance']}
             title="Ibayiw Integrated National High School"
             description="Providing essential electrical maintenance services to ensure a safe and fully functional learning environment for students and faculty."
             badges={[
               { icon: HardHat, text: 'Electrical Technician Trainee' },
-              { icon: Calendar, text: '2024' },
+              { icon: Calendar, text: '2022' },
               { icon: MapPin, text: 'Alaminos, Laguna' },
               { icon: GraduationCap, text: 'DepEd — Senior High School' },
             ]}
@@ -102,76 +103,6 @@ export default function Work() {
       </div>
 
       <div className="h-px my-16" style={{ background: 'var(--line)' }} />
-
-      {/* ═══════════════ SECTION B — NAVIRA THESIS ═══════════════ */}
-      <ScrollReveal><SubLabel>Projects</SubLabel></ScrollReveal>
-      <div className="mt-5">
-        <ScrollReveal delay={0.1}>
-          <ProjectHeroCard
-            chips={['UNDERGRADUATE THESIS  ·  2025–2026', 'Embedded Systems']}
-            title="NAVIRA"
-            titleSize={64}
-            description="An ESP32-Based Smart Blind Stick with Wireless Armband Integration for Enhanced Mobility of the Visually Impaired"
-            badges={[
-              { icon: UserCog, text: 'Lead Designer & Developer' },
-              { icon: Calendar, text: '2025' },
-              { icon: GraduationCap, text: 'BS Computer Engineering' },
-            ]}
-            iconNode={<BlindStickIllustration />}
-          />
-        </ScrollReveal>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
-          <ScrollReveal delay={0.1}>
-            <RcoCard icon={UserCog} title="My Role" body="As one of seven developers, I contributed to the hardware design including PCB layout in KiCad, firmware programming in C++ for the ESP32 microcontroller, and integration of the UWB-based wireless armband communication system." />
-          </ScrollReveal>
-          <ScrollReveal delay={0.2}>
-            <RcoCard icon={Brain} title="The Challenge" body="Developing a cost-effective assistive device that accurately detects both ground-level and elevated obstacles, identifies wet surfaces to prevent slips, and provides intuitive haptic and audio feedback for visually impaired users." />
-          </ScrollReveal>
-          <ScrollReveal delay={0.3}>
-            <RcoCard icon={Trophy} title="The Outcome" body="A functional prototype validated by Computer Engineering practitioners with an overall mean score of 4.6 / 5.0 (Highly Acceptable). The device demonstrated obstacle detection up to 2 m, water detection across varying depths, and reliable UWB tracking within 10 m." />
-          </ScrollReveal>
-        </div>
-
-        <div className="mt-11"><ScrollReveal><SubLabel>Project Deliverables</SubLabel></ScrollReveal></div>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-5">
-          <ScrollReveal delay={0.1}>
-            <DetailCard
-              icon={Box} title="3D Model"
-              visual={{ type: 'illustration', node: <ThreeDBoxIllustration /> }}
-              caption="Fusion 360"
-              description="Full enclosure designed in Fusion 360. Ergonomic grip, sensor mounting ports, and compartment for ESP32 PCB."
-            />
-          </ScrollReveal>
-          <ScrollReveal delay={0.2}>
-            <DetailCard
-              icon={CircuitBoard} title="Device Design"
-              visual={{ type: 'illustration', node: <PcbIllustration /> }}
-              caption="KiCad · ESP32"
-              description="Schematic capture and PCB layout in KiCad. Integrates ESP32 UWB, dual VL53L0X ToF sensors, vibration motor, and water detection circuit."
-            />
-          </ScrollReveal>
-          <ScrollReveal delay={0.3}>
-            <DetailCard
-              icon={BookOpen} title="Research Paper"
-              visual={{ type: 'checklist', items: ['Theoretical Framework', 'Review of Related Literature', 'Flow Chart', 'Project Benefits', 'Recommendation'] }}
-              description="Full academic manuscript covering theoretical framework, design methodology, hardware/software testing results, and evaluation based on ISO 25010 standards."
-            />
-          </ScrollReveal>
-        </div>
-
-        <div className="mt-8">
-          <ScrollReveal>
-            <TagRow
-              label="Tech Stack"
-              items={['ESP32', 'C++', 'VL53L0X ToF', 'Copper Wire Water Detection', 'DFPlayer Mini', 'KiCad', 'Fusion 360', 'ESP-NOW', 'AutoCAD']}
-            />
-          </ScrollReveal>
-        </div>
-      </div>
-
-      <div className="h-px my-16" style={{ background: 'var(--line)' }} />
-
       {/* ═══════════════ SECTION C — OJT / FDS ASYA ═══════════════ */}
       <ScrollReveal><SubLabel>On-the-Job Training</SubLabel></ScrollReveal>
       <div className="mt-5">
@@ -248,6 +179,112 @@ export default function Work() {
             <TagRow
               label="Tools & Tech"
               items={['Flutter', 'Go', 'Postman', 'JMeter', 'Linux CLI', 'Adobe Premiere', 'Canva', 'Figma']}
+            />
+          </ScrollReveal>
+        </div>
+      </div>
+
+      <div className="h-px my-16" style={{ background: 'var(--line)' }} />
+      {/* ═══════════════ SECTION D — PRICON MICROELECTRONICS ═══════════════ */}
+      <ScrollReveal><SubLabel>Work Experience</SubLabel></ScrollReveal>
+      <div className="mt-5">
+        <ScrollReveal delay={0.1}>
+          <ProjectHeroCard
+            chips={['WORK EXPERIENCE  ·  AUG – SEP 2026', 'Production']}
+            title={'Pricon\nMicroelectronics Inc.'}
+            titleSize={44}
+            description="Keeping production machines running and product quality on track, while helping newly assigned operators learn their processes, machine operation, and safety protocols."
+            badges={[
+              { icon: Wrench, text: 'OPTECH' },
+              { icon: Calendar, text: 'August – September 2026' },
+              { icon: MapPin, text: 'LISP, Cabuyao, Laguna' },
+            ]}
+            icon={Factory}
+          />
+        </ScrollReveal>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
+          <ScrollReveal delay={0.1}>
+            <RcoCard icon={Wrench} title="Machine Troubleshooting & Repair" body="Troubleshot, adjusted, and performed basic repairs on production machines to resolve equipment issues and maintain product quality." />
+          </ScrollReveal>
+          <ScrollReveal delay={0.2}>
+            <RcoCard icon={Users} title="Operator Orientation" body="Oriented and guided newly assigned operators on their designated processes, proper machine operation, work procedures, and safety protocols." />
+          </ScrollReveal>
+        </div>
+
+        <div className="mt-8">
+          <ScrollReveal>
+            <TagRow
+              label="Skills Applied"
+              items={['Machine Troubleshooting', 'Equipment Adjustment', 'Basic Repairs', 'Product Quality', 'Operator Training', 'Safety Protocols']}
+            />
+          </ScrollReveal>
+        </div>
+      </div>
+
+      <div className="h-px my-16" style={{ background: 'var(--line)' }} />
+      {/* ═══════════════ SECTION B — NAVIRA THESIS ═══════════════ */}
+      <ScrollReveal><SubLabel>Projects</SubLabel></ScrollReveal>
+      <div className="mt-5">
+        <ScrollReveal delay={0.1}>
+          <ProjectHeroCard
+            chips={['UNDERGRADUATE THESIS  ·  2025–2026', 'Embedded Systems']}
+            title="NAVIRA"
+            titleSize={64}
+            description="An ESP32-Based Smart Blind Stick with Wireless Armband Integration for Enhanced Mobility of the Visually Impaired"
+            badges={[
+              { icon: UserCog, text: 'Lead Designer & Developer' },
+              { icon: Calendar, text: '2025' },
+              { icon: GraduationCap, text: 'BS Computer Engineering' },
+            ]}
+            iconNode={<BlindStickIllustration />}
+          />
+        </ScrollReveal>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
+          <ScrollReveal delay={0.1}>
+            <RcoCard icon={UserCog} title="My Role" body="As one of seven developers, I contributed to the hardware design including PCB layout in KiCad, firmware programming in C++ for the ESP32 microcontroller, and integration of the UWB-based wireless armband communication system." />
+          </ScrollReveal>
+          <ScrollReveal delay={0.2}>
+            <RcoCard icon={Brain} title="The Challenge" body="Developing a cost-effective assistive device that accurately detects both ground-level and elevated obstacles, identifies wet surfaces to prevent slips, and provides intuitive haptic and audio feedback for visually impaired users." />
+          </ScrollReveal>
+          <ScrollReveal delay={0.3}>
+            <RcoCard icon={Trophy} title="The Outcome" body="A functional prototype validated by Computer Engineering practitioners with an overall mean score of 4.6 / 5.0 (Highly Acceptable). The device demonstrated obstacle detection up to 2 m, water detection across varying depths, and reliable UWB tracking within 10 m." />
+          </ScrollReveal>
+        </div>
+
+        <div className="mt-11"><ScrollReveal><SubLabel>Project Deliverables</SubLabel></ScrollReveal></div>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-5">
+          <ScrollReveal delay={0.1}>
+            <DetailCard
+              icon={Box} title="3D Model"
+              visual={{ type: 'illustration', node: <ThreeDBoxIllustration /> }}
+              caption="Fusion 360"
+              description="Full enclosure designed in Fusion 360. Ergonomic grip, sensor mounting ports, and compartment for ESP32 PCB."
+            />
+          </ScrollReveal>
+          <ScrollReveal delay={0.2}>
+            <DetailCard
+              icon={CircuitBoard} title="Device Design"
+              visual={{ type: 'illustration', node: <PcbIllustration /> }}
+              caption="KiCad · ESP32"
+              description="Schematic capture and PCB layout in KiCad. Integrates ESP32 UWB, dual VL53L0X ToF sensors, vibration motor, and water detection circuit."
+            />
+          </ScrollReveal>
+          <ScrollReveal delay={0.3}>
+            <DetailCard
+              icon={BookOpen} title="Research Paper"
+              visual={{ type: 'checklist', items: ['Theoretical Framework', 'Review of Related Literature', 'Flow Chart', 'Project Benefits', 'Recommendation'] }}
+              description="Full academic manuscript covering theoretical framework, design methodology, hardware/software testing results, and evaluation based on ISO 25010 standards."
+            />
+          </ScrollReveal>
+        </div>
+
+        <div className="mt-8">
+          <ScrollReveal>
+            <TagRow
+              label="Tech Stack"
+              items={['ESP32', 'C++', 'VL53L0X ToF', 'Copper Wire Water Detection', 'DFPlayer Mini', 'KiCad', 'Fusion 360', 'ESP-NOW', 'AutoCAD']}
             />
           </ScrollReveal>
         </div>

@@ -120,10 +120,10 @@ export function DetailCard({ icon: Icon, title, subtitle, visual, caption, descr
 export function ProjectHeroCard({ chips, title, titleSize = 52, description, badges, icon: Icon, iconNode }) {
   return (
     <div
-      className="rounded-xl p-9 flex items-start gap-8"
+      className="rounded-xl p-6 md:p-9 flex flex-col-reverse md:flex-row md:items-start gap-6 md:gap-8"
       style={{ background: 'var(--card)', border: '1px solid var(--card-border)' }}
     >
-      <div className="flex-1">
+      <div className="flex-1 min-w-0">
         <div className="flex items-center justify-between flex-wrap gap-2 mb-6">
           {chips.map((chip) => (
             <div
@@ -137,7 +137,7 @@ export function ProjectHeroCard({ chips, title, titleSize = 52, description, bad
         </div>
         <h3
           className="font-bold whitespace-pre-line"
-          style={{ color: 'var(--head)', fontFamily: 'Playfair Display, serif', fontSize: titleSize, letterSpacing: -2, lineHeight: 0.95 }}
+          style={{ color: 'var(--head)', fontFamily: 'Playfair Display, serif', fontSize: `clamp(30px, 9vw, ${titleSize}px)`, letterSpacing: -2, lineHeight: 0.95, overflowWrap: 'anywhere' }}
         >
           {title}
         </h3>

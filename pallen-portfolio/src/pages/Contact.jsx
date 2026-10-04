@@ -19,16 +19,16 @@ export default function Contact() {
     <div className="px-8 md:px-20 py-16" style={{ background: 'var(--bg)' }}>
       <ScrollReveal>
         <p className="text-xs font-bold tracking-[3px] mb-3" style={{ color: 'var(--eyebrow)' }}>
-          03 — CONTACT
+          04 — CONTACT
         </p>
       </ScrollReveal>
       <ScrollReveal delay={0.1}>
-        <h1
+        <h2
           className="text-4xl md:text-5xl font-bold mb-13"
           style={{ color: 'var(--head)', fontFamily: 'Playfair Display, serif', letterSpacing: '-1px' }}
         >
           Let's work together.
-        </h1>
+        </h2>
       </ScrollReveal>
 
       <div className="flex flex-col md:flex-row gap-14 mt-13">

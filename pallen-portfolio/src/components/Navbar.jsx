@@ -1,51 +1,111 @@
-import { useEffect, useState } from 'react'
-import { NavLink, useLocation } from 'react-router-dom'
+import { useEffect, useRef, useState } from 'react'
 import { Menu, X, Sun, Moon } from 'lucide-react'
 import { useTheme } from '../theme/ThemeContext'
+import { SECTIONS, scrollToSection } from '../lib/sections'
 
-const links = [
-  { to: '/', label: 'Home' },
-  { to: '/about', label: 'About' },
-  { to: '/work', label: 'Work' },
-  { to: '/design', label: 'Design' },
-  { to: '/contact', label: 'Contact' },
-]
-
-export default function Navbar() {
+export default function Navbar({ active }) {
   const { dark, toggleTheme } = useTheme()
   const [open, setOpen] = useState(false)
-  const { pathname } = useLocation()
+  const [hidden, setHidden] = useState(false)
+  const lastY = useRef(0)
+  const openRef = useRef(false)
+  const quietUntil = useRef(0) // ignore scroll events while a section jump is animating
+  openRef.current = open
 
-  // Close the mobile menu on navigation and scroll to top.
+  // Hide the bar when scrolling down, bring it back when scrolling up.
   useEffect(() => {
-    setOpen(false)
-    window.scrollTo(0, 0)
-  }, [pathname])
+    lastY.current = window.scrollY
+    let ticking = false
 
-  const linkStyle = ({ isActive }) => ({
-    color: isActive ? 'var(--head)' : 'var(--body)',
-    textDecoration: 'none',
-    fontSize: '0.9rem',
-    fontWeight: isActive ? 600 : 400,
-  })
+    const update = () => {
+      const y = Math.max(window.scrollY, 0)
+      const delta = y - lastY.current
+      ticking = false
+
+      if (performance.now() < quietUntil.current) {
+        lastY.current = y
+        return
+      }
+      if (y < 80) {
+        setHidden(false) // always visible near the top
+      } else if (Math.abs(delta) > 6) {
+        setHidden(delta > 0 && !openRef.current) // small moves are ignored: no flicker
+      }
+      if (Math.abs(delta) > 6) lastY.current = y
+    }
+
+    const onScroll = () => {
+      if (!ticking) {
+        ticking = true
+        requestAnimationFrame(update)
+      }
+    }
+
+    // A click on a nav link jumps to a section: tuck the bar away going down,
+    // show it going up, and don't let the animated scroll flip it back and forth.
+    const onJump = (e) => {
+      quietUntil.current = performance.now() + 1100
+      setHidden(e.detail.down && e.detail.id !== 'home')
+      setOpen(false)
+    }
+
+    window.addEventListener('scroll', onScroll, { passive: true })
+    window.addEventListener('section-jump', onJump)
+    return () => {
+      window.removeEventListener('scroll', onScroll)
+      window.removeEventListener('section-jump', onJump)
+    }
+  }, [])
+
+  const go = (id) => (e) => {
+    e.preventDefault()
+    scrollToSection(id)
+  }
 
   return (
     <nav
-      className="relative"
-      style={{ borderBottom: '1px solid var(--border)', background: 'var(--bg)' }}
+      className="sticky top-0 z-50"
+      onFocus={() => setHidden(false)}
+      style={{
+        borderBottom: '1px solid var(--border)',
+        background: 'color-mix(in srgb, var(--bg) 88%, transparent)',
+        backdropFilter: 'blur(12px)',
+        WebkitBackdropFilter: 'blur(12px)',
+        transform: hidden ? 'translateY(-100%)' : 'translateY(0)',
+        transition: 'transform 0.35s cubic-bezier(0.33, 1, 0.68, 1)',
+      }}
     >
       <div className="flex items-center justify-between px-5 md:px-10 py-5">
-        <span style={{ color: 'var(--head)', fontWeight: 600, letterSpacing: '0.05em' }}>
+        <a
+          href="/"
+          onClick={go('home')}
+          style={{ color: 'var(--head)', fontWeight: 600, letterSpacing: '0.05em', textDecoration: 'none' }}
+        >
           PALLEN
-        </span>
+        </a>
 
         {/* Desktop links */}
         <div className="hidden md:flex gap-7">
-          {links.map((link) => (
-            <NavLink key={link.to} to={link.to} style={linkStyle}>
-              {link.label}
-            </NavLink>
-          ))}
+          {SECTIONS.map((s) => {
+            const on = s.id === active
+            return (
+              <a
+                key={s.id}
+                href={s.id === 'home' ? '/' : `/#${s.id}`}
+                onClick={go(s.id)}
+                aria-current={on ? 'true' : undefined}
+                style={{
+                  color: on ? 'var(--head)' : 'var(--body)',
+                  textDecoration: 'none',
+                  fontSize: '0.9rem',
+                  fontWeight: on ? 600 : 400,
+                  transition: 'color 0.2s',
+                }}
+              >
+                {s.label}
+              </a>
+            )
+          })}
         </div>
 
         <div className="flex items-center gap-2">
@@ -90,11 +150,26 @@ export default function Navbar() {
           className="md:hidden absolute left-0 right-0 top-full z-50 flex flex-col gap-1 px-5 py-3"
           style={{ background: 'var(--bg)', borderBottom: '1px solid var(--border)' }}
         >
-          {links.map((link) => (
-            <NavLink key={link.to} to={link.to} style={linkStyle} className="py-2.5">
-              {link.label}
-            </NavLink>
-          ))}
+          {SECTIONS.map((s) => {
+            const on = s.id === active
+            return (
+              <a
+                key={s.id}
+                href={s.id === 'home' ? '/' : `/#${s.id}`}
+                onClick={go(s.id)}
+                aria-current={on ? 'true' : undefined}
+                className="py-2.5"
+                style={{
+                  color: on ? 'var(--head)' : 'var(--body)',
+                  textDecoration: 'none',
+                  fontSize: '0.9rem',
+                  fontWeight: on ? 600 : 400,
+                }}
+              >
+                {s.label}
+              </a>
+            )
+          })}
         </div>
       )}
     </nav>

@@ -8,6 +8,7 @@ export default function ContactForm() {
   const [email, setEmail] = useState('')
   const [subject, setSubject] = useState('')
   const [message, setMessage] = useState('')
+  const [website, setWebsite] = useState('') // honeypot — real users never see/fill this
   const [sending, setSending] = useState(false)
   const [status, setStatus] = useState(null) // { type: 'success' | 'error', message: string }
 
@@ -37,6 +38,7 @@ export default function ContactForm() {
           email: email.trim(),
           subject: subject.trim() || 'Portfolio Inquiry',
           message: message.trim(),
+          website,
         }),
       })
 
@@ -58,17 +60,29 @@ export default function ContactForm() {
 
   return (
     <div
-      className="rounded-2xl p-8"
+      className="rounded-2xl p-8 relative"
       style={{ background: 'var(--card)', border: '1px solid var(--card-border)' }}
     >
-      {status && <Banner type={status.type} message={status.message} />}
+      <div aria-live="polite">
+        {status && <Banner type={status.type} message={status.message} />}
+      </div>
 
       <div className="flex flex-col gap-5">
+        <input
+          type="text"
+          name="website"
+          value={website}
+          onChange={(e) => setWebsite(e.target.value)}
+          tabIndex={-1}
+          autoComplete="off"
+          aria-hidden="true"
+          style={{ position: 'absolute', left: '-9999px', width: 1, height: 1, opacity: 0 }}
+        />
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-          <FormField label="Your Name" value={name} onChange={setName} required />
-          <FormField label="Your Email" value={email} onChange={setEmail} type="email" required />
+          <FormField label="Your Name" value={name} onChange={setName} maxLength={100} required />
+          <FormField label="Your Email" value={email} onChange={setEmail} type="email" maxLength={254} required />
         </div>
-        <FormField label="Subject" value={subject} onChange={setSubject} />
+        <FormField label="Subject" value={subject} onChange={setSubject} maxLength={150} />
         <FormField label="Message" value={message} onChange={setMessage} multiline maxLength={2000} required />
 
         <button

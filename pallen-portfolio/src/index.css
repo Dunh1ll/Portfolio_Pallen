@@ -27,7 +27,7 @@ body {
   --bg-3: #161616;
   --head: #f7f7f7;
   --body: #8c8c8c;
-  --muted: #555555;
+  --muted: #6b6b6b; /* lightened from #555 for better contrast on dark */
   --border: #2a2a2a;
   --border-h: #505050;
   --card: #131313;
@@ -47,7 +47,7 @@ body {
   --bg-3: #e0e0e0;
   --head: #0d0d0d;
   --body: #555555;
-  --muted: #999999;
+  --muted: #777777;
   --border: #d5d5d5;
   --border-h: #999999;
   --card: #ffffff;
@@ -57,7 +57,7 @@ body {
   --icon: #555555;
   --card-text: #111111;
   --card-sub: #666666;
-  --eyebrow: #888888;
+  --eyebrow: #777777;
   --line: #cccccc;
 }
 
@@ -100,4 +100,26 @@ body {
 
 .animate-catBreathe {
   animation: catBreathe 3.2s ease-in-out infinite;
+}
+
+/* Keyboard focus ring for interactive elements */
+:focus-visible {
+  outline: 2px solid var(--head);
+  outline-offset: 2px;
+}
+
+/* Respect users who prefer less motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    transition-delay: 0s !important;
+    scroll-behavior: auto !important;
+  }
+  .animate-fadeSlide {
+    opacity: 1;
+  }
 }

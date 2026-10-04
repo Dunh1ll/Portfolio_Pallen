@@ -14,13 +14,17 @@ const accents = ['#a855f7', '#6366f1', '#8b5cf6', '#d946ef', '#7c3aed', '#bd5cf6
 
 function DrawingTile({ slot, index, aspect }) {
   const [hover, setHover] = useState(false)
+  const [imgOk, setImgOk] = useState(true)
   const accent = accents[index % accents.length]
 
   return (
     <div
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
-      className="relative overflow-hidden rounded-[18px] transition-transform duration-200 flex-1"
+      onFocus={() => setHover(true)}
+      onBlur={() => setHover(false)}
+      tabIndex={0}
+      className="relative overflow-hidden rounded-[18px] transition-transform duration-200 flex-1 outline-none"
       style={{
         aspectRatio: aspect,
         transform: hover ? 'translateY(-5px)' : 'translateY(0)',
@@ -28,11 +32,20 @@ function DrawingTile({ slot, index, aspect }) {
         boxShadow: hover ? `0 0 32px 2px ${accent}2e` : '0 0 12px rgba(0,0,0,0.08)',
       }}
     >
-      <img
-        src={`/drawings/${slot.file}`}
-        alt={slot.title}
-        className="absolute inset-0 w-full h-full object-cover"
-      />
+      {imgOk ? (
+        <img
+          src={`/drawings/${slot.file}`}
+          alt={`${slot.title} — ${slot.medium} drawing, ${slot.caption}`}
+          loading="lazy"
+          className="absolute inset-0 w-full h-full object-cover"
+          onError={() => setImgOk(false)}
+        />
+      ) : (
+        <div
+          className="absolute inset-0"
+          style={{ background: `linear-gradient(135deg, ${accent}33, var(--bg-3) 70%)` }}
+        />
+      )}
 
       {/* Index badge (visible when not hovered) */}
       <div
@@ -42,7 +55,7 @@ function DrawingTile({ slot, index, aspect }) {
         {index + 1}
       </div>
 
-      {/* Hover caption overlay */}
+      {/* Hover / focus caption overlay */}
       <div
         className="absolute inset-0 flex flex-col justify-end p-[18px] transition-opacity duration-200"
         style={{
@@ -91,7 +104,7 @@ export default function DrawingGallery() {
       <div className="flex items-center gap-1.5 mt-6">
         <Info size={12} style={{ color: 'var(--muted)' }} />
         <p className="text-[11px]" style={{ color: 'var(--muted)' }}>
-          Hover over any piece for details.
+          Hover over (or tab to) any piece for details.
         </p>
       </div>
     </div>

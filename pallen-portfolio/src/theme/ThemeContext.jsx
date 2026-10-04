@@ -1,16 +1,29 @@
 import { createContext, useContext, useEffect, useState } from 'react'
 
 const ThemeContext = createContext(null)
+const STORAGE_KEY = 'pallen-theme'
+
+function getInitialDark() {
+  try {
+    const saved = localStorage.getItem(STORAGE_KEY)
+    if (saved === 'dark') return true
+    if (saved === 'light') return false
+  } catch {
+    // storage unavailable (private mode, etc.) — fall through
+  }
+  // Default to dark, but respect an explicit light OS preference.
+  return !window.matchMedia?.('(prefers-color-scheme: light)').matches
+}
 
 export function ThemeProvider({ children }) {
-  const [dark, setDark] = useState(true) // matches PTheme's default: dark ?? true
+  const [dark, setDark] = useState(getInitialDark)
 
   useEffect(() => {
-    const root = document.documentElement
-    if (dark) {
-      root.classList.remove('light')
-    } else {
-      root.classList.add('light')
+    document.documentElement.classList.toggle('light', !dark)
+    try {
+      localStorage.setItem(STORAGE_KEY, dark ? 'dark' : 'light')
+    } catch {
+      // ignore
     }
   }, [dark])
 
@@ -23,7 +36,6 @@ export function ThemeProvider({ children }) {
   )
 }
 
-// Equivalent of PTheme.of(context)
 export function useTheme() {
   const ctx = useContext(ThemeContext)
   if (ctx === null) {

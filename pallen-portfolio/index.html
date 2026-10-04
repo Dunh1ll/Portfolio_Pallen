@@ -4,10 +4,25 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Prince Dunhill Pallen — Computer Engineer & Full-Stack Developer</title>
+    <meta name="description" content="Portfolio of Prince Dunhill Pallen, a Computer Engineering student building full-stack and embedded systems projects (ESP32, React, Flutter, Go)." />
+    <meta name="theme-color" content="#080808" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Prince Dunhill Pallen — Computer Engineer" />
+    <meta property="og:description" content="Full-stack developer and embedded systems engineer building technology that bridges hardware and software." />
+    <meta property="og:image" content="/profile.jpg" />
+    <meta name="twitter:card" content="summary" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
-    <title>pallen-portfolio</title>
+    <script>
+      // Apply saved theme before first paint to avoid a dark/light flash.
+      try {
+        var t = localStorage.getItem('pallen-theme');
+        var light = t ? t === 'light' : window.matchMedia('(prefers-color-scheme: light)').matches;
+        if (light) document.documentElement.classList.add('light');
+      } catch (e) {}
+    </script>
   </head>
   <body>
     <div id="root"></div>

@@ -1,5 +1,7 @@
 import { Palette } from 'lucide-react'
 import ScrollReveal from '../components/ScrollReveal'
+import DragScroll from '../components/DragScroll'
+import { RevealText } from '../components/TextEffects'
 import DesignCard from '../components/DesignCard'
 import { GrayPill } from '../components/WorkCards'
 
@@ -32,20 +34,16 @@ const projects = [
 
 export default function Design() {
   return (
-    <div className="px-8 md:px-20 py-16" style={{ background: 'var(--bg)' }}>
+    <div className="px-8 md:px-20 py-16">
       <ScrollReveal>
         <p className="text-xs font-bold tracking-[3px] mb-3" style={{ color: 'var(--eyebrow)' }}>
           03 — UI/UX DESIGN
         </p>
       </ScrollReveal>
-      <ScrollReveal delay={0.1}>
-        <h2
+      <h2
           className="text-4xl md:text-5xl font-bold mb-3"
           style={{ color: 'var(--head)', fontFamily: 'Playfair Display, serif', letterSpacing: '-1px' }}
-        >
-          Interfaces that feel right.
-        </h2>
-      </ScrollReveal>
+        ><RevealText text="Interfaces that feel right." /></h2>
       <ScrollReveal delay={0.15}>
         <p className="text-sm max-w-xl mb-14" style={{ color: 'var(--body)' }}>
           A collection of UI clone projects — built to study design systems, practice layout precision, and sharpen visual instinct.
@@ -54,19 +52,19 @@ export default function Design() {
 
       {/* Horizontal scroll carousel */}
       <ScrollReveal delay={0.2}>
-        <div className="flex gap-6 overflow-x-auto pb-4 -mx-8 px-8 md:-mx-20 md:px-20 snap-x snap-mandatory">
+        <DragScroll className="flex gap-6 overflow-x-auto pb-4 -mx-8 px-8 md:-mx-20 md:px-20 snap-x snap-mandatory scroll-pl-8 md:scroll-pl-20">
           {projects.map((p) => (
             <div key={p.title} className="snap-start">
               <DesignCard {...p} />
             </div>
           ))}
-        </div>
+        </DragScroll>
       </ScrollReveal>
 
       {/* Design philosophy */}
       <ScrollReveal delay={0.1} className="mt-14">
         <div
-          className="rounded-2xl p-8 flex items-start gap-6"
+          className="spotlight rounded-2xl p-8 flex items-start gap-6"
           style={{ background: 'var(--card)', border: '1px solid var(--card-border)' }}
         >
           <div

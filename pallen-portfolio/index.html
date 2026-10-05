@@ -16,6 +16,23 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
     <script>
+      // First visit in this browser session: play the intro. The preloader ends it;
+      // the timeout is a safety net so the page can never stay locked.
+      try {
+        var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        var seen = sessionStorage.getItem('pallen-intro');
+        if (!reduce && !seen && !location.hash && location.pathname === '/') {
+          document.documentElement.setAttribute('data-intro', 'playing');
+          setTimeout(function () {
+            if (document.documentElement.getAttribute('data-intro') === 'playing') {
+              document.documentElement.removeAttribute('data-intro');
+              window.dispatchEvent(new Event('intro-done'));
+            }
+          }, 4500);
+        }
+      } catch (e) {}
+    </script>
+    <script>
       // Apply saved theme before first paint to avoid a dark/light flash.
       try {
         var t = localStorage.getItem('pallen-theme');

@@ -1,5 +1,5 @@
-import { useEffect, useRef, useState } from 'react'
-import { Menu, X, Sun, Moon } from 'lucide-react'
+import { useEffect, useLayoutEffect, useRef, useState } from 'react'
+import { Menu, X, Sun, Moon, Search } from 'lucide-react'
 import { useTheme } from '../theme/ThemeContext'
 import { SECTIONS, scrollToSection } from '../lib/sections'
 
@@ -11,6 +11,20 @@ export default function Navbar({ active }) {
   const openRef = useRef(false)
   const quietUntil = useRef(0) // ignore scroll events while a section jump is animating
   openRef.current = open
+
+  // Sliding underline that moves to the link of the section being read.
+  const linksRef = useRef(null)
+  const [bar, setBar] = useState({ left: 0, width: 0, ready: false })
+  useLayoutEffect(() => {
+    const place = () => {
+      const el = linksRef.current?.querySelector('[aria-current="true"]')
+      if (!el) return setBar((b) => ({ ...b, width: 0 }))
+      setBar({ left: el.offsetLeft, width: el.offsetWidth, ready: true })
+    }
+    place()
+    window.addEventListener('resize', place)
+    return () => window.removeEventListener('resize', place)
+  }, [active])
 
   // Hide the bar when scrolling down, bring it back when scrolling up.
   useEffect(() => {
@@ -85,7 +99,21 @@ export default function Navbar({ active }) {
         </a>
 
         {/* Desktop links */}
-        <div className="hidden md:flex gap-7">
+        <div ref={linksRef} className="hidden md:flex gap-7 relative">
+          <span
+            aria-hidden="true"
+            className="absolute -bottom-2 h-[2px] rounded-full"
+            style={{
+              left: 0,
+              width: bar.width,
+              transform: `translateX(${bar.left}px)`,
+              background: 'var(--head)',
+              opacity: bar.width ? 1 : 0,
+              transition: bar.ready
+                ? 'transform 0.45s cubic-bezier(0.2, 0.8, 0.2, 1), width 0.45s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.2s'
+                : 'none',
+            }}
+          />
           {SECTIONS.map((s) => {
             const on = s.id === active
             return (
@@ -110,7 +138,31 @@ export default function Navbar({ active }) {
 
         <div className="flex items-center gap-2">
           <button
-            onClick={toggleTheme}
+            type="button"
+            onClick={() => window.dispatchEvent(new Event('open-palette'))}
+            aria-label="Open command menu"
+            className="hidden sm:flex items-center gap-2"
+            style={{
+              background: 'var(--card)',
+              color: 'var(--card-sub)',
+              border: '1px solid var(--border)',
+              padding: '0.4rem 0.75rem',
+              borderRadius: '999px',
+              cursor: 'pointer',
+              fontSize: '0.8rem',
+            }}
+          >
+            <Search size={13} />
+            <span className="hidden lg:inline">Search</span>
+            <kbd
+              className="hidden lg:inline text-[10px] font-semibold px-1.5 rounded"
+              style={{ background: 'var(--bg-3)', border: '1px solid var(--border)', color: 'var(--muted)' }}
+            >
+              {/Mac|iPhone|iPad/.test(navigator.platform || navigator.userAgent) ? '⌘ K' : 'Ctrl K'}
+            </kbd>
+          </button>
+          <button
+            onClick={(e) => toggleTheme(e)}
             aria-label={dark ? 'Switch to light theme' : 'Switch to dark theme'}
             className="flex items-center gap-1.5"
             style={{
@@ -123,7 +175,13 @@ export default function Navbar({ active }) {
               fontSize: '0.85rem',
             }}
           >
-            {dark ? <Sun size={14} /> : <Moon size={14} />}
+            <span
+              key={dark ? 'sun' : 'moon'}
+              className="inline-flex"
+              style={{ animation: 'iconSpin 0.6s cubic-bezier(0.2, 0.8, 0.2, 1)' }}
+            >
+              {dark ? <Sun size={14} /> : <Moon size={14} />}
+            </span>
             <span className="hidden sm:inline">{dark ? 'Light' : 'Dark'}</span>
           </button>
 

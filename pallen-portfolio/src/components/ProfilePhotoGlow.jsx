@@ -1,7 +1,7 @@
 export default function ProfilePhotoGlow() {
   return (
     <div
-      className="w-[200px] h-[200px] rounded-xl overflow-hidden animate-photoPulse"
+      className="w-[240px] h-[240px] sm:w-[280px] sm:h-[280px] lg:w-[320px] lg:h-[320px] rounded-xl overflow-hidden animate-photoPulse"
     >
       <img
         src="/profile.jpg"

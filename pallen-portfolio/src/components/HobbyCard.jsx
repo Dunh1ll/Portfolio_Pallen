@@ -1,7 +1,7 @@
 export default function HobbyCard({ icon: Icon, accentColor, title, subtitle, description, tag, tagIcon: TagIcon }) {
   return (
     <div
-      className="rounded-xl p-5 h-full flex flex-col gap-3 relative overflow-hidden"
+      className="spotlight rounded-xl p-5 h-full flex flex-col gap-3 relative overflow-hidden"
       style={{ background: 'var(--card)', border: '1px solid var(--card-border)' }}
     >
       <div

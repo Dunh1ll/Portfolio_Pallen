@@ -121,6 +121,274 @@ body {
   outline: 2px solid var(--head);
   outline-offset: 2px;
 }
+/* The palette search field is the focus target by design; the dialog itself shows focus. */
+[role='combobox']:focus-visible {
+  outline: none;
+}
+
+/* ── Hero title: letters rise in, lift when the cursor passes ── */
+@keyframes letterRise {
+  from { transform: translateY(108%) rotate(5deg); opacity: 0; }
+  to { transform: translateY(0) rotate(0); opacity: 1; }
+}
+.hero-letter {
+  transition: transform 0.45s cubic-bezier(0.2, 0.8, 0.2, 1);
+  cursor: default;
+}
+.hero-letter:hover {
+  transform: translateY(-0.07em);
+}
+
+/* ── Typed line caret ── */
+.typed-caret {
+  display: inline-block;
+  width: 2px;
+  height: 1.05em;
+  margin-left: 3px;
+  vertical-align: -0.18em;
+  background: var(--head);
+  animation: caretBlink 1s steps(1) infinite;
+}
+@keyframes caretBlink {
+  50% { opacity: 0; }
+}
+
+/* ── Spotlight: a soft glow and bright edge that follow the cursor over cards ── */
+.spotlight {
+  position: relative;
+  isolation: isolate;
+}
+.spotlight::before,
+.spotlight::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.35s ease;
+}
+.spotlight::before {
+  z-index: -1;
+  background: radial-gradient(
+    380px circle at var(--mx, 50%) var(--my, 50%),
+    color-mix(in srgb, var(--head) 8%, transparent),
+    transparent 65%
+  );
+}
+.spotlight::after {
+  padding: 1px;
+  background: radial-gradient(
+    220px circle at var(--mx, 50%) var(--my, 50%),
+    color-mix(in srgb, var(--head) 55%, transparent),
+    transparent 70%
+  );
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  mask-composite: exclude;
+}
+.spotlight:hover::before,
+.spotlight:hover::after {
+  opacity: 1;
+}
+
+/* ── Tech marquee ── */
+@keyframes marquee {
+  to { transform: translateX(-50%); }
+}
+.marquee-track {
+  animation: marquee 55s linear infinite;
+}
+.marquee:hover .marquee-track {
+  animation-play-state: paused;
+}
+.marquee-mask {
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+  mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+}
+
+/* ── Cursor ring + dot (mouse only) ── */
+.cursor-layer {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 100;
+  mix-blend-mode: difference;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+.cursor-layer[data-visible='true'] {
+  opacity: 1;
+}
+.cursor-ring,
+.cursor-dot {
+  position: fixed;
+  top: 0;
+  left: 0;
+  will-change: transform;
+}
+.cursor-ring-inner {
+  width: 38px;
+  height: 38px;
+  margin: -19px 0 0 -19px;
+  border: 1.5px solid #fff;
+  border-radius: 50%;
+  transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1), background-color 0.25s ease;
+}
+.cursor-dot-inner {
+  width: 6px;
+  height: 6px;
+  margin: -3px 0 0 -3px;
+  border-radius: 50%;
+  background: #fff;
+  transition: transform 0.2s ease;
+}
+.cursor-layer[data-mode='link'] .cursor-ring-inner {
+  transform: scale(1.65);
+  background-color: rgba(255, 255, 255, 0.18);
+}
+.cursor-layer[data-mode='link'] .cursor-dot-inner {
+  transform: scale(0.5);
+}
+.cursor-layer[data-mode='text'] .cursor-ring-inner {
+  transform: scale(0.35);
+}
+.cursor-layer[data-pressed='true'] .cursor-ring-inner {
+  transform: scale(0.75);
+}
+
+/* ── Theme switch: the new theme spreads out from the toggle button ── */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+::view-transition-old(root) { z-index: 1; }
+::view-transition-new(root) { z-index: 2; }
+
+@keyframes iconSpin {
+  from { transform: rotate(-120deg) scale(0.4); opacity: 0; }
+  to { transform: rotate(0) scale(1); opacity: 1; }
+}
+
+/* ── Lightbox + toast ── */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes lightboxIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+@keyframes toastIn {
+  from { opacity: 0; transform: translate(-50%, 12px); }
+  to { opacity: 1; transform: translate(-50%, 0); }
+}
+
+/* ── Accent colors: used sparingly for progress, glows and highlights ── */
+:root {
+  --accent-a: #8b5cf6;
+  --accent-b: #22d3ee;
+  --aurora-strength: 30%;
+}
+.light {
+  --accent-a: #7c3aed;
+  --accent-b: #0891b2;
+  --aurora-strength: 18%;
+}
+::selection {
+  background: color-mix(in srgb, var(--accent-a) 35%, transparent);
+}
+
+/* ── Intro: the page is held still while the preloader plays ── */
+html[data-intro='playing'] {
+  overflow: hidden;
+}
+html[data-intro='playing'] .animate-fadeSlide,
+html[data-intro='playing'] .hero-letter-wrap {
+  animation-play-state: paused !important;
+}
+
+/* ── Hero depth: aurora glow + floating chips ── */
+@keyframes auroraDrift {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+  50% { transform: translate3d(34px, -26px, 0) scale(1.14); }
+}
+.aurora-blob {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  animation: auroraDrift 15s ease-in-out infinite;
+}
+@keyframes chipFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-9px); }
+}
+.tech-chip {
+  animation: chipFloat 6s ease-in-out infinite;
+}
+
+/* ── Cursor-lit wordmark (footer) ── */
+.glow-stroke {
+  color: transparent;
+  -webkit-text-stroke: 1px var(--border-h);
+}
+.glow-fill {
+  position: absolute;
+  inset: 0;
+  color: transparent;
+  background: radial-gradient(
+    340px circle at var(--mx, 50%) var(--my, 50%),
+    var(--accent-a),
+    var(--accent-b) 40%,
+    transparent 72%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+.glow-text:hover .glow-fill {
+  opacity: 1;
+}
+
+/* ── Cursor label (View / Drag) shown inside the ring ── */
+.cursor-label {
+  position: fixed;
+  top: 0;
+  left: 0;
+  will-change: transform;
+}
+.cursor-label-inner {
+  width: 90px;
+  margin: -8px 0 0 -45px;
+  text-align: center;
+  font-size: 10px;
+  line-height: 16px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #fff;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+.cursor-layer[data-mode='label'] .cursor-ring-inner {
+  transform: scale(2.3);
+  background-color: rgba(255, 255, 255, 0.14);
+}
+.cursor-layer[data-mode='label'] .cursor-dot-inner {
+  transform: scale(0);
+}
+.cursor-layer[data-mode='label'] .cursor-label-inner {
+  opacity: 1;
+}
+
+/* ── Command palette ── */
+@keyframes paletteIn {
+  from { opacity: 0; transform: translateY(-10px) scale(0.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
 
 /* Respect users who prefer less motion */
 @media (prefers-reduced-motion: reduce) {
@@ -135,5 +403,13 @@ body {
   }
   .animate-fadeSlide {
     opacity: 1;
+  }
+  .marquee-track {
+    flex-wrap: wrap;
+    width: auto;
+    row-gap: 0.75rem;
+  }
+  .marquee-dup {
+    display: none;
   }
 }

@@ -5,7 +5,9 @@ import {
   Wrench, Factory, Users,
 } from 'lucide-react'
 import ScrollReveal from '../components/ScrollReveal'
+import { RevealText } from '../components/TextEffects'
 import SubLabel from '../components/SubLabel'
+import MetricStrip from '../components/MetricStrip'
 import {
   RcoCard, DetailCard, ProjectHeroCard, TagRow,
   LightingIllustration, WiringIllustration, PcbIllustration,
@@ -14,21 +16,17 @@ import {
 
 export default function Work() {
   return (
-    <div className="px-8 md:px-20 py-16" style={{ background: 'var(--bg-2)' }}>
+    <div className="px-8 md:px-20 py-16">
       {/* Page header */}
       <ScrollReveal>
         <p className="text-xs font-bold tracking-[3px] mb-3" style={{ color: 'var(--eyebrow)' }}>
           02 — WORK & PROJECTS
         </p>
       </ScrollReveal>
-      <ScrollReveal delay={0.1}>
-        <h2
+      <h2
           className="text-4xl md:text-5xl font-bold mb-3"
           style={{ color: 'var(--head)', fontFamily: 'Playfair Display, serif', letterSpacing: '-1px' }}
-        >
-          Experience & Engineering.
-        </h2>
-      </ScrollReveal>
+        ><RevealText text="Experience & Engineering." /></h2>
       <ScrollReveal delay={0.15}>
         <p className="text-sm max-w-xl mb-14" style={{ color: 'var(--body)' }}>
           Real-world experience and hands-on engineering projects that shaped my technical foundation.
@@ -240,6 +238,19 @@ export default function Work() {
             iconNode={<BlindStickIllustration />}
           />
         </ScrollReveal>
+
+        <div className="mt-6">
+          <ScrollReveal>
+            <MetricStrip
+              items={[
+                { value: 4.6, decimals: 1, suffix: ' / 5.0', label: 'Overall mean score from Computer Engineering practitioners (Highly Acceptable)' },
+                { value: 2, suffix: ' m', label: 'Obstacle detection range' },
+                { value: 10, suffix: ' m', label: 'Reliable UWB tracking range' },
+                { value: 7, label: 'Developers on the team' },
+              ]}
+            />
+          </ScrollReveal>
+        </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
           <ScrollReveal delay={0.1}>

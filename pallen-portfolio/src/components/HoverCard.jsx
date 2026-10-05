@@ -7,7 +7,7 @@ export default function HoverCard({ children, slideRight = false, className = ''
     <div
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
-      className={`flex items-center rounded-lg px-4 py-3 transition-all duration-200 ${className}`}
+      className={`spotlight flex items-center rounded-lg px-4 py-3 transition-all duration-200 ${className}`}
       style={{
         background: hover ? 'var(--card-h)' : 'var(--card)',
         border: `1px solid ${hover ? 'var(--card-border-h)' : 'var(--card-border)'}`,

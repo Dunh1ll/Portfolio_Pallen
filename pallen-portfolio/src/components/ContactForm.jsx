@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { Send, Loader2 } from 'lucide-react'
 import FormField from './FormField'
 import Banner from './Banner'
+import { confetti } from '../lib/confetti'
 
 export default function ContactForm() {
   const [name, setName] = useState('')
@@ -12,8 +13,9 @@ export default function ContactForm() {
   const [sending, setSending] = useState(false)
   const [status, setStatus] = useState(null) // { type: 'success' | 'error', message: string }
 
-  async function handleSend() {
+  async function handleSend(e) {
     setStatus(null)
+    const rect = e?.currentTarget?.getBoundingClientRect?.() // where the confetti comes from
 
     if (!name.trim() || !email.trim() || !message.trim()) {
       setStatus({ type: 'error', message: 'Please fill in your name, email, and message.' })
@@ -44,6 +46,7 @@ export default function ContactForm() {
 
       if (res.ok) {
         setStatus({ type: 'success', message: "Message sent! I'll get back to you within 48 hours." })
+        confetti(rect ? { x: rect.left + rect.width / 2, y: rect.top } : undefined)
         setTimeout(() => {
           setName(''); setEmail(''); setSubject(''); setMessage(''); setStatus(null)
         }, 4000)

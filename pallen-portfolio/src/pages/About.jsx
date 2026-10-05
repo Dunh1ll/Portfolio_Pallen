@@ -3,6 +3,7 @@ import {
   Cpu, Compass, Box, Gamepad2, Trophy, PenTool, Palette, Swords,
 } from 'lucide-react'
 import ScrollReveal from '../components/ScrollReveal'
+import { RevealText } from '../components/TextEffects'
 import SubLabel from '../components/SubLabel'
 import IconSquare from '../components/IconSquare'
 import HoverCard from '../components/HoverCard'
@@ -61,21 +62,17 @@ const hobbies = [
 
 export default function About() {
   return (
-    <div className="px-8 md:px-20 py-16" style={{ background: 'var(--bg)' }}>
+    <div className="px-8 md:px-20 py-16">
       {/* Header */}
       <ScrollReveal>
         <p className="text-xs font-bold tracking-[3px] mb-3" style={{ color: 'var(--eyebrow)' }}>
           01 — ABOUT ME
         </p>
       </ScrollReveal>
-      <ScrollReveal delay={0.1}>
-        <h2
+      <h2
           className="text-4xl md:text-5xl font-bold mb-12"
           style={{ color: 'var(--head)', fontFamily: 'Playfair Display, serif', letterSpacing: '-1px' }}
-        >
-          The person behind the profile.
-        </h2>
-      </ScrollReveal>
+        ><RevealText text="The person behind the profile." /></h2>
 
       <div className="flex flex-col md:flex-row gap-14">
         {/* LEFT: Bio, education, values, tools */}
@@ -183,14 +180,10 @@ export default function About() {
           OUTSIDE THE CODE
         </p>
       </ScrollReveal>
-      <ScrollReveal delay={0.1}>
-        <h2
+      <h2
           className="text-3xl font-bold mb-9"
           style={{ color: 'var(--head)', fontFamily: 'Playfair Display, serif', letterSpacing: '-0.5px' }}
-        >
-          When I'm not building, I'm...
-        </h2>
-      </ScrollReveal>
+        ><RevealText text="When I'm not building, I'm..." /></h2>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-3.5">
         {hobbies.map((h, i) => (
           <ScrollReveal key={h.title} delay={0.1 * i}>
@@ -210,9 +203,7 @@ export default function About() {
         <h2
           className="text-3xl font-bold mb-2"
           style={{ color: 'var(--head)', fontFamily: 'Playfair Display, serif', letterSpacing: '-0.5px' }}
-        >
-          Sketches Anime Characters.
-        </h2>
+        ><RevealText text="Sketches Anime Characters." /></h2>
         <p className="text-sm mb-9" style={{ color: 'var(--body)' }}>
           A glimpse into the art I create in my downtime — anime characters.
         </p>

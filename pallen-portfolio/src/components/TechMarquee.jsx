@@ -4,6 +4,7 @@ import { prefersReducedMotion } from '../lib/motion'
 // Skills use the same colors as the Technical Skills bars on the About page.
 const ITEMS = [
   { name: 'ESP32', color: '#E7352C' },
+  { name: 'Arduino', color: '#00979D' },
   { name: 'React', color: '#61DAFB' },
   { name: 'Flutter', color: '#40A9FF' },
   { name: 'Go', color: '#00ADD8' },

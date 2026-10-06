@@ -10,7 +10,7 @@ import { EMAIL, PHONE_DISPLAY, PHONE_LINK, SOCIALS, copyToClipboard } from '../l
 import { showToast } from '../lib/toast'
 
 const contacts = [
-  { icon: FacebookIcon, platform: 'Facebook', handle: 'Dunhill Pallen', detail: 'facebook.com/dnhll.plln', url: SOCIALS.facebook.url },
+  { icon: FacebookIcon, platform: 'Facebook', handle: 'Dunhill Pallen', detail: 'https://www.facebook.com/share/1PrmSrruoB/', url: SOCIALS.facebook.url },
   { icon: GithubIcon, platform: 'GitHub', handle: 'Dunh1ll', detail: 'github.com/Dunh1ll', url: SOCIALS.github.url },
   { icon: Mail, platform: 'Gmail', handle: EMAIL, detail: EMAIL, url: `mailto:${EMAIL}`, copy: EMAIL, copied: 'Email address copied' },
   { icon: LinkedinIcon, platform: 'LinkedIn', handle: 'Prince Dunhill Pallen', detail: 'linkedin.com/in/pallen-prince-dunhill', url: SOCIALS.linkedin.url },

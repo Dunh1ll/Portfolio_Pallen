@@ -69,7 +69,7 @@ export function RevealText({ text, delay = 0 }) {
   )
 }
 
-const ROLES = ['ESP32 firmware', 'Flutter apps', 'Go backends', 'PCB layouts in KiCad']
+const ROLES = ['ESP32 firmware', 'websites', 'Flutter apps', 'Go backends', 'PCB layouts in KiCad']
 
 // "I build ..." line that types and deletes each thing I build.
 export function TypedRoles() {

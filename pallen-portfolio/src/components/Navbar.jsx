@@ -7,6 +7,7 @@ export default function Navbar({ active }) {
   const { dark, toggleTheme } = useTheme()
   const [open, setOpen] = useState(false)
   const [hidden, setHidden] = useState(false)
+  const [peek, setPeek] = useState(false) // cursor is at the top edge: show the bar
   const lastY = useRef(0)
   const openRef = useRef(false)
   const quietUntil = useRef(0) // ignore scroll events while a section jump is animating
@@ -63,9 +64,17 @@ export default function Navbar({ active }) {
       setOpen(false)
     }
 
+    // Moving the mouse to the top edge of the window brings the bar back.
+    const onPointer = (e) => {
+      if (e.pointerType && e.pointerType !== 'mouse') return
+      if (e.clientY <= 48) setPeek(true)
+    }
+
     window.addEventListener('scroll', onScroll, { passive: true })
+    window.addEventListener('pointermove', onPointer, { passive: true })
     window.addEventListener('section-jump', onJump)
     return () => {
+      window.removeEventListener('pointermove', onPointer)
       window.removeEventListener('scroll', onScroll)
       window.removeEventListener('section-jump', onJump)
     }
@@ -80,12 +89,13 @@ export default function Navbar({ active }) {
     <nav
       className="sticky top-0 z-50"
       onFocus={() => setHidden(false)}
+      onPointerLeave={() => setPeek(false)}
       style={{
         borderBottom: '1px solid var(--border)',
         background: 'color-mix(in srgb, var(--bg) 88%, transparent)',
         backdropFilter: 'blur(12px)',
         WebkitBackdropFilter: 'blur(12px)',
-        transform: hidden ? 'translateY(-100%)' : 'translateY(0)',
+        transform: hidden && !peek ? 'translateY(-100%)' : 'translateY(0)',
         transition: 'transform 0.35s cubic-bezier(0.33, 1, 0.68, 1)',
       }}
     >

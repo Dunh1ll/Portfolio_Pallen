@@ -1,6 +1,5 @@
 import { Resend } from 'resend'
 
-const resend = new Resend(process.env.RESEND_API_KEY)
 
 const LIMITS = { name: 100, email: 254, subject: 150, message: 2000 }
 
@@ -82,7 +81,13 @@ export default async function handler(req, res) {
     return res.status(400).json({ error: 'Invalid characters in input.' })
   }
 
+  if (!process.env.RESEND_API_KEY) {
+    console.error('RESEND_API_KEY is not set')
+    return res.status(500).json({ error: 'Email service is not configured yet.' })
+  }
+
   try {
+    const resend = new Resend(process.env.RESEND_API_KEY)
     await resend.emails.send({
       from: 'Portfolio Contact <onboarding@resend.dev>', // swap to your verified domain later
       to: 'cpe.pallen.princedunhill@gmail.com',

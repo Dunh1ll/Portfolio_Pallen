@@ -1,5 +1,5 @@
 {
   "rewrites": [
-    { "source": "/((?!api/|drawings/|design/|assets/|.*\\..*).*)", "destination": "/index.html" }
+    { "source": "/((?!api/|@|src/|node_modules/|drawings/|design/|assets/|.*\\..*).*)", "destination": "/index.html" }
   ]
 }
